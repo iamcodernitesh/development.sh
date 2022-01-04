@@ -12,4 +12,4 @@ A user-friendly bash scripts which helps install apps for development
 3. sudo ./install.sh
 
 ## Usage
-Type ```devtool``` in the terminal
+Type ```sudo devtool``` in the terminal to install IDEs and Languages else use only ```devtool```
