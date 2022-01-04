@@ -7,7 +7,7 @@ while true; do
         "2" "IDE/Text Editors" \
         "3" "Documentation" \
         "4" "Man Pages" \
-        "5" "Modify a Record" \
+        "5" "Test API Calls" \
         "6" "Exit" 3>&1 1>&2 2>&3)
         case "$mainsel" in
             1)
@@ -21,7 +21,7 @@ while true; do
                 jdk-openjdk "OpenJDK Java 17 development kit" off  \
                 openjdk8-src "OpenJDK Java 8 sources" off  \
                 openjdk11-src "OpenJDK Java 11 sources" off  \
-                openjdk "OpenJDK Java 17 sources" off  \
+                openjdk-src "OpenJDK Java 17 sources" off  \
                 nodejs-lts-erbium "NodeJS 12 LTS" off \
                 nodejs-lts-fermium "NodeJS 14 LTS" off \
                 nodejs-lts-gallium "NodeJS 16 LTS" off \
@@ -39,6 +39,14 @@ while true; do
                 pacman -S $finalselection
                 ;;
             2)
+                which yay
+                if [ $? == 1 ]; then
+                    pacman -S --needed git base-devel
+                    git clone https://aur.archlinux.org/yay.git
+                    cd yay
+                    makepkg -si
+                fi
+
                 selectapps=$(whiptail --checklist "IDE/Text Editors" 25 120 16\
                 atom "Atom - A hackable text editor for the 21st Century" off \
                 code "VSCode - The Open Source build of Visual Studio Code (vscode) editor" off \
@@ -766,13 +774,18 @@ while true; do
                         https://devdocs.io/yii~2.0/
                         ;;
                     177)
-                        exit
+                        ;;
                 esac
                 ;;
             4)
-                echo "Test"
+                maninput=$(whiptail --title "Manual" --inputbox "Enter the name of the manual you want to open" 8 78 3>&1 1>&2 2>&3)
+                output=$(man $maninput)
+                whiptail --title "$maninput Man Page" --scrolltext --msgbox "$output" 30 130
                 ;;
             5)
+                apiinput=$(whiptail --title "Manual" --inputbox "Enter the name of the manual you want to open" 8 78 3>&1 1>&2 2>&3)
+                output=$(curl $apiinput | jq)
+                whiptail --title "API Call JSON" --scrolltext --msgbox "$output" 30 130
                 ;;
             6)
                 exit
