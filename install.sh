@@ -8,6 +8,12 @@ if [ $? == 1 ]; then
     makepkg -si
 fi
 
+which man 
+if [ $? == 1 ]; then
+    echo "Installing SHC"
+    sudo pacman -S man-db man-pages
+fi
+
 which shc 
 if [ $? == 1 ]; then
     echo "Installing SHC"
