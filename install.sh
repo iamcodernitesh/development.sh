@@ -11,7 +11,7 @@ fi
 which man 
 if [ $? == 1 ]; then
     echo "Installing SHC"
-    sudo pacman -S man-db man-pages
+    pacman -S man-db man-pages
 fi
 
 which shc 
