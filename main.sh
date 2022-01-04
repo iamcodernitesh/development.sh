@@ -39,14 +39,6 @@ while true; do
                 pacman -S $finalselection
                 ;;
             2)
-                which yay
-                if [ $? == 1 ]; then
-                    pacman -S --needed git base-devel
-                    git clone https://aur.archlinux.org/yay.git
-                    cd yay
-                    makepkg -si
-                fi
-
                 selectapps=$(whiptail --checklist "IDE/Text Editors" 25 120 16\
                 atom "Atom - A hackable text editor for the 21st Century" off \
                 code "VSCode - The Open Source build of Visual Studio Code (vscode) editor" off \
@@ -61,7 +53,7 @@ while true; do
 
                 finalselection=$(tr -d "\"" <<<"$selectapps")
                 echo $finalselection
-                pacman -S $finalselection
+                yay -S $finalselection
                 ;;
             3)
                 docsel=$(whiptail --title "Documentation" --menu "List of Documentations\nChoose an option" 25 78 16 \
